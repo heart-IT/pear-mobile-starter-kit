@@ -1,0 +1,22 @@
+# deps
+node_modules/
+# JS/RN
+*.log
+.DS_Store
+coverage/
+# iOS
+ios/Pods/
+ios/build/
+ios/.xcode.env.local
+**/*.xcworkspace/xcuserdata/
+DerivedData/
+# Android
+android/build/
+android/app/build/
+android/.gradle/
+android/.cxx/
+android/app/.cxx/
+android/local.properties
+*.keystore
+!debug.keystore
+# nitro codegen is committed on purpose (regenerate with `npx nitrogen`)

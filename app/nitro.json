@@ -1,0 +1,50 @@
+{
+  "$schema": "https://nitro.margelo.com/nitro.schema.json",
+  "cxxNamespace": ["shoebox"],
+  "ios": {
+    "iosModuleName": "Shoebox"
+  },
+  "android": {
+    "androidNamespace": ["shoebox"],
+    "androidCxxLibName": "Shoebox"
+  },
+  "autolinking": {
+    "ShoeboxPaths": {
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "HybridShoeboxPaths"
+      },
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "HybridShoeboxPaths"
+      }
+    },
+    "ShoeboxRoll": {
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "HybridShoeboxRoll"
+      },
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "HybridShoeboxRoll"
+      }
+    },
+    "ShoeboxBytes": {
+      "all": {
+        "language": "c++",
+        "implementationClassName": "HybridShoeboxBytes"
+      }
+    },
+    "ShoeboxEmbed": {
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "HybridShoeboxEmbed"
+      },
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "HybridShoeboxEmbed"
+      }
+    }
+  },
+  "ignorePaths": ["node_modules"]
+}

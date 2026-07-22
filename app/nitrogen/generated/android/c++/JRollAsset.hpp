@@ -12,7 +12,7 @@
 
 #include <string>
 
-namespace margelo::nitro::shoebox {
+namespace margelo::nitro::pearstarter {
 
   using namespace facebook;
 
@@ -21,7 +21,7 @@ namespace margelo::nitro::shoebox {
    */
   struct JRollAsset final: public jni::JavaClass<JRollAsset> {
   public:
-    static constexpr auto kJavaDescriptor = "Lcom/margelo/nitro/shoebox/RollAsset;";
+    static constexpr auto kJavaDescriptor = "Lcom/margelo/nitro/pearstarter/RollAsset;";
 
   public:
     /**
@@ -70,4 +70,4 @@ namespace margelo::nitro::shoebox {
     }
   };
 
-} // namespace margelo::nitro::shoebox
+} // namespace margelo::nitro::pearstarter

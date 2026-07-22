@@ -23,15 +23,15 @@ JS layer is the device-verified scaffold from that series.
 
 Two native seams, both proven by the blank home screen on first launch:
 
-1. **Nitro** — a typed native module (`ShoeboxPaths`) crossing JS ↔ Kotlin/Swift/C++
+1. **Nitro** — a typed native module (`PearStarterPaths`) crossing JS ↔ Kotlin/Swift/C++
    and returning a real value (the app documents dir). Three more example modules
    ship as references for different patterns:
    | Module | Pattern |
    |---|---|
-   | `ShoeboxPaths` | the minimal seam — a value in, a value out (Kotlin/Swift) |
-   | `ShoeboxRoll` | a platform API (Android MediaStore / iOS PhotoKit) |
-   | `ShoeboxBytes` | a hand-rolled **C++** HybridObject (mmap → zero-copy `ArrayBuffer`) |
-   | `ShoeboxEmbed` | on-device ML (TFLite + NNAPI) — **ships without its model** |
+   | `PearStarterPaths` | the minimal seam — a value in, a value out (Kotlin/Swift) |
+   | `PearStarterRoll` | a platform API (Android MediaStore / iOS PhotoKit) |
+   | `PearStarterBytes` | a hand-rolled **C++** HybridObject (mmap → zero-copy `ArrayBuffer`) |
+   | `PearStarterEmbed` | on-device ML (TFLite + NNAPI) — **ships without its model** |
 2. **Bare** — a [Bare](https://github.com/holepunchto/bare) worklet hosted by
    [react-native-bare-kit](https://github.com/holepunchto/react-native-bare-kit),
    booting `worker/index.js` and answering a `bare-rpc` PING over the IPC. This is
@@ -106,7 +106,7 @@ And the one that isn't a build error but a philosophy — **the sixth trap**:
    neither call site.** Miss it and no HybridObject is ever registered — a
    null-guarded accessor then hides the dead seam and the app "works" by luck. The
    fixes: a real `JNI_OnLoad` → `registerAllNatives()` in `android/nitro/cpp-adapter.cpp`,
-   and `ShoeboxOnLoad.initializeNative()` in `MainApplication.onCreate`. **The lesson,
+   and `PearStarterOnLoad.initializeNative()` in `MainApplication.onCreate`. **The lesson,
    which outlives every version above: verify a native module by the value it returns
    on a device, never by "the app didn't crash."**
 
@@ -117,9 +117,9 @@ The Bare worker (`worker/`) is where P2P lives. Add deps there — `corestore`,
 `worker/index.js`. react-native-bare-kit links their **native addons** (sodium,
 udx, rocksdb) by scanning the worker's dependency tree, which is why:
 
-- the app must depend on the worker package (`"shoebox-worker": "file:../worker"`
+- the app must depend on the worker package (`"pearstarter-worker": "file:../worker"`
   in `app/package.json`) — that's how bare-kit finds the addons to vendor;
-- you run `npm run bundle:worker` from `app/` (over `node_modules/shoebox-worker/`)
+- you run `npm run bundle:worker` from `app/` (over `node_modules/pearstarter-worker/`)
   after changing the worker, so the bundled addon versions match what bare-kit links.
 
 Hand-vendoring a second copy of the natives produces "frameworks with conflicting
@@ -133,15 +133,15 @@ Keep only the Nitro modules you need:
    `cpp/Hybrid*.cpp`).
 2. Re-run `npx nitrogen` from `app/` to regenerate `nitrogen/generated/` and the
    registration.
-3. `ShoeboxEmbed` ships **without** its `mobilenet.tflite` asset — drop your own
+3. `PearStarterEmbed` ships **without** its `mobilenet.tflite` asset — drop your own
    model into `android/app/src/main/assets/` (with `noCompress 'tflite'`), or delete
    the module per the steps above.
 
 ## Renaming for your app
 
 The starter ships a neutral **display name** ("Pear Mobile Starter") but keeps its
-internal identifiers — the RN component name `Shoebox`, the Android id `com.shoebox`,
-and the Nitro namespace `com.margelo.nitro.shoebox` — so the device-verified wiring stays
+internal identifiers — the RN component name `PearStarter`, the Android id `com.pearstarter`,
+and the Nitro namespace `com.margelo.nitro.pearstarter` — so the device-verified wiring stays
 intact out of the box. Renaming splits into two **independent** axes. You almost always
 want the first; the second is optional.
 
@@ -153,11 +153,11 @@ want the first; the second is optional.
 
 | What | Every file that must change |
 |---|---|
-| **Component name** (`Shoebox`) | `app/app.json` `name` · `app/android/app/src/main/java/com/shoebox/MainActivity.kt` `getMainComponentName()` · `app/ios/Shoebox/AppDelegate.swift` `withModuleName:` · `app/android/settings.gradle` `rootProject.name` |
-| **Display name** (user-visible label) | `app/app.json` `displayName` · `app/android/app/src/main/res/values/strings.xml` `app_name` · `app/ios/Shoebox/Info.plist` `CFBundleDisplayName` · `app/ios/Shoebox/LaunchScreen.storyboard` |
-| **Android app id** (`com.shoebox`) | `app/android/app/build.gradle` `applicationId` **and** `namespace` · the package dirs `.../java/com/shoebox/` · the `package com.shoebox` line in `MainApplication.kt` and `MainActivity.kt` |
-| **iOS bundle id** | `app/ios/Shoebox.xcodeproj/project.pbxproj` `PRODUCT_BUNDLE_IDENTIFIER` (currently the `com.example.pearstarter` placeholder, in **both** Debug and Release) |
-| **iOS project name** | the `ios/Shoebox/` folder, `Shoebox.xcodeproj`, `Shoebox.xcworkspace`, the scheme, and the `Podfile` target — **rename the target from inside Xcode** so it rewrites `project.pbxproj` safely, then `pod install` |
+| **Component name** (`PearStarter`) | `app/app.json` `name` · `app/android/app/src/main/java/com/pearstarter/MainActivity.kt` `getMainComponentName()` · `app/ios/PearStarter/AppDelegate.swift` `withModuleName:` · `app/android/settings.gradle` `rootProject.name` |
+| **Display name** (user-visible label) | `app/app.json` `displayName` · `app/android/app/src/main/res/values/strings.xml` `app_name` · `app/ios/PearStarter/Info.plist` `CFBundleDisplayName` · `app/ios/PearStarter/LaunchScreen.storyboard` |
+| **Android app id** (`com.pearstarter`) | `app/android/app/build.gradle` `applicationId` **and** `namespace` · the package dirs `.../java/com/pearstarter/` · the `package com.pearstarter` line in `MainApplication.kt` and `MainActivity.kt` |
+| **iOS bundle id** | `app/ios/PearStarter.xcodeproj/project.pbxproj` `PRODUCT_BUNDLE_IDENTIFIER` (currently the `com.pearstarter` placeholder, in **both** Debug and Release) |
+| **iOS project name** | the `ios/PearStarter/` folder, `PearStarter.xcodeproj`, `PearStarter.xcworkspace`, the scheme, and the `Podfile` target — **rename the target from inside Xcode** so it rewrites `project.pbxproj` safely, then `pod install` |
 
 `app/index.js` needs no edit — it reads the name from `app.json`.
 
@@ -167,24 +167,24 @@ Android package-dir move; the iOS project rename stays a manual Xcode step (hand
 
 ### Axis 2 — the Nitro module identity (optional)
 
-The `com.margelo.nitro.shoebox` namespace and the `Shoebox*` module names thread through the
+The `com.margelo.nitro.pearstarter` namespace and the `PearStarter*` module names thread through the
 ~50 **generated** files under `app/nitrogen/generated/`. Leave them and everything works —
 `com.margelo.nitro` is Nitro's own convention. If you do rename:
 
 1. Change `app/nitro.json` `cxxNamespace` / `androidNamespace` (and the `autolinking` keys if
    you rename the modules), rename the spec files + native impl classes, and update the
-   `com.margelo.nitro.shoebox` import in `MainApplication.kt` and the `margelo::nitro::shoebox`
+   `com.margelo.nitro.pearstarter` import in `MainApplication.kt` and the `margelo::nitro::pearstarter`
    call in `android/nitro/cpp-adapter.cpp`.
 2. Re-run **`npx nitrogen`** from `app/` to regenerate everything under `nitrogen/generated/`.
 3. If you also change `iosModuleName` / `androidCxxLibName` in `nitro.json`, the hand-written
    references to the generated *library* name move in lockstep: `app/android/CMakeLists.txt`
-   (`add_library(Shoebox …)` + the `Shoebox+autolinking.cmake` include), `app/android/app/build.gradle`
-   (`apply from: … Shoebox+autolinking.gradle`), and `app/ShoeboxNitro.podspec` (`load … Shoebox+autolinking.rb`).
+   (`add_library(PearStarter …)` + the `PearStarter+autolinking.cmake` include), `app/android/app/build.gradle`
+   (`apply from: … PearStarter+autolinking.gradle`), and `app/PearStarterNitro.podspec` (`load … PearStarter+autolinking.rb`).
 
 **Do the whole rename once, then verify on a device.** `npx nitrogen` + a build is the only
 thing that confirms the two axes still line up.
 
-The worker package name (`shoebox-worker` in `worker/package.json`, the `file:../worker` key
+The worker package name (`pearstarter-worker` in `worker/package.json`, the `file:../worker` key
 in `app/package.json`, and the `bundle:worker` path) is internal — leave it, or rename all
 three together and re-run `npm install` + `npm run bundle:worker`.
 

@@ -1,11 +1,11 @@
 import { NitroModules } from 'react-native-nitro-modules'
 import b4a from 'b4a'
-import type { ShoeboxEmbed } from './specs/shoebox-embed.nitro'
+import type { PearStarterEmbed } from './specs/pearstarter-embed.nitro'
 
 /** The on-device embedding model (TFLite). null if the native side is absent. */
-export function embedModule(): ShoeboxEmbed | null {
+export function embedModule(): PearStarterEmbed | null {
   try {
-    return NitroModules.createHybridObject<ShoeboxEmbed>('ShoeboxEmbed')
+    return NitroModules.createHybridObject<PearStarterEmbed>('PearStarterEmbed')
   } catch {
     return null
   }

@@ -1,5 +1,5 @@
-// JNI entry point for libShoebox. System.loadLibrary("Shoebox") (called from
-// ShoeboxOnLoad.initializeNative in MainApplication) triggers this, which
+// JNI entry point for libPearStarter. System.loadLibrary("PearStarter") (called from
+// PearStarterOnLoad.initializeNative in MainApplication) triggers this, which
 // registers every Nitro HybridObject into the shared registry. Without it the
 // library loads but registerAllNatives never runs — createHybridObject then
 // throws "not registered … []". (This file lives in nitro/ deliberately: the
@@ -7,10 +7,10 @@
 // default-app-setup OnLoad — see CMakeLists.txt.)
 #include <fbjni/fbjni.h>
 #include <jni.h>
-#include "ShoeboxOnLoad.hpp"
+#include "PearStarterOnLoad.hpp"
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
   return facebook::jni::initialize(vm, []() {
-    margelo::nitro::shoebox::registerAllNatives();
+    margelo::nitro::pearstarter::registerAllNatives();
   });
 }

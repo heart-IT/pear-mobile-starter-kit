@@ -13,20 +13,20 @@ include(${REACT_ANDROID_DIR}/cmake-utils/ReactNative-application.cmake)
 # The Nitro library, kept separate: the generated autolinking file attaches
 # all Nitrogen sources to this target and resolves its paths relative to
 # this file (../nitrogen -> app/nitrogen). Its JNI_OnLoad lives in
-# ShoeboxOnLoad.cpp; the Kotlin side loads libShoebox.so on demand.
+# PearStarterOnLoad.cpp; the Kotlin side loads libPearStarter.so on demand.
 # cpp-adapter lives in nitro/ deliberately: ReactNative-application.cmake
 # globs *.cpp NEXT TO THIS FILE and, if any exist, swaps out its
 # default-app-setup sources (the TurboModule delegate OnLoad) for them —
 # silently breaking every TurboModule at boot.
-add_library(Shoebox SHARED
+add_library(PearStarter SHARED
   nitro/cpp-adapter.cpp
   # Movement 3: the hand-rolled C++ mmap HybridObject. The generated
-  # ShoeboxOnLoad.cpp #includes and constructs it, so both the source and its
+  # PearStarterOnLoad.cpp #includes and constructs it, so both the source and its
   # header directory must reach this target.
-  ../cpp/HybridShoeboxBytes.cpp
+  ../cpp/HybridPearStarterBytes.cpp
 )
 
 # app/cpp holds the hand-written C++ HybridObject impl + header.
-target_include_directories(Shoebox PRIVATE ${CMAKE_SOURCE_DIR}/../cpp)
+target_include_directories(PearStarter PRIVATE ${CMAKE_SOURCE_DIR}/../cpp)
 
-include(${CMAKE_SOURCE_DIR}/../nitrogen/generated/android/Shoebox+autolinking.cmake)
+include(${CMAKE_SOURCE_DIR}/../nitrogen/generated/android/PearStarter+autolinking.cmake)

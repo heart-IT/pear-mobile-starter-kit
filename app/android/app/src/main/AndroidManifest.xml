@@ -2,7 +2,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Photo-library permissions were removed from the neutral starter shell. If you
-         enable the ShoeboxRoll example module, add back: READ_MEDIA_IMAGES,
+         enable the PearStarterRoll example module, add back: READ_MEDIA_IMAGES,
          READ_MEDIA_VISUAL_USER_SELECTED (Android 14+ partial grant), and
          READ_EXTERNAL_STORAGE (maxSdkVersion=32) — plus requestLegacyExternalStorage
          on <application> for pre-13 devices. -->

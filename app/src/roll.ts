@@ -1,6 +1,6 @@
 import { PermissionsAndroid, Platform } from 'react-native'
 import { NitroModules } from 'react-native-nitro-modules'
-import type { RollAsset, ShoeboxRoll } from './specs/shoebox-roll.nitro'
+import type { RollAsset, PearStarterRoll } from './specs/pearstarter-roll.nitro'
 
 export type { RollAsset }
 
@@ -8,9 +8,9 @@ export type { RollAsset }
  * The roll behind its typed seam. Same visible-failure philosophy as paths.ts:
  * null means "native module missing", not a crash.
  */
-export function rollModule(): ShoeboxRoll | null {
+export function rollModule(): PearStarterRoll | null {
   try {
-    return NitroModules.createHybridObject<ShoeboxRoll>('ShoeboxRoll')
+    return NitroModules.createHybridObject<PearStarterRoll>('PearStarterRoll')
   } catch {
     return null
   }

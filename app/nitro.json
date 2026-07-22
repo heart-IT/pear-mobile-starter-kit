@@ -1,48 +1,48 @@
 {
   "$schema": "https://nitro.margelo.com/nitro.schema.json",
-  "cxxNamespace": ["shoebox"],
+  "cxxNamespace": ["pearstarter"],
   "ios": {
-    "iosModuleName": "Shoebox"
+    "iosModuleName": "PearStarter"
   },
   "android": {
-    "androidNamespace": ["shoebox"],
-    "androidCxxLibName": "Shoebox"
+    "androidNamespace": ["pearstarter"],
+    "androidCxxLibName": "PearStarter"
   },
   "autolinking": {
-    "ShoeboxPaths": {
+    "PearStarterPaths": {
       "ios": {
         "language": "swift",
-        "implementationClassName": "HybridShoeboxPaths"
+        "implementationClassName": "HybridPearStarterPaths"
       },
       "android": {
         "language": "kotlin",
-        "implementationClassName": "HybridShoeboxPaths"
+        "implementationClassName": "HybridPearStarterPaths"
       }
     },
-    "ShoeboxRoll": {
+    "PearStarterRoll": {
       "ios": {
         "language": "swift",
-        "implementationClassName": "HybridShoeboxRoll"
+        "implementationClassName": "HybridPearStarterRoll"
       },
       "android": {
         "language": "kotlin",
-        "implementationClassName": "HybridShoeboxRoll"
+        "implementationClassName": "HybridPearStarterRoll"
       }
     },
-    "ShoeboxBytes": {
+    "PearStarterBytes": {
       "all": {
         "language": "c++",
-        "implementationClassName": "HybridShoeboxBytes"
+        "implementationClassName": "HybridPearStarterBytes"
       }
     },
-    "ShoeboxEmbed": {
+    "PearStarterEmbed": {
       "ios": {
         "language": "swift",
-        "implementationClassName": "HybridShoeboxEmbed"
+        "implementationClassName": "HybridPearStarterEmbed"
       },
       "android": {
         "language": "kotlin",
-        "implementationClassName": "HybridShoeboxEmbed"
+        "implementationClassName": "HybridPearStarterEmbed"
       }
     }
   },

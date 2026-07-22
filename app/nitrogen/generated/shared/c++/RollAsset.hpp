@@ -32,7 +32,7 @@
 
 #include <string>
 
-namespace margelo::nitro::shoebox {
+namespace margelo::nitro::pearstarter {
 
   /**
    * A struct which can be represented as a JavaScript object (RollAsset).
@@ -53,16 +53,16 @@ namespace margelo::nitro::shoebox {
     friend bool operator==(const RollAsset& lhs, const RollAsset& rhs) = default;
   };
 
-} // namespace margelo::nitro::shoebox
+} // namespace margelo::nitro::pearstarter
 
 namespace margelo::nitro {
 
   // C++ RollAsset <> JS RollAsset (object)
   template <>
-  struct JSIConverter<margelo::nitro::shoebox::RollAsset> final {
-    static inline margelo::nitro::shoebox::RollAsset fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
+  struct JSIConverter<margelo::nitro::pearstarter::RollAsset> final {
+    static inline margelo::nitro::pearstarter::RollAsset fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       jsi::Object obj = arg.asObject(runtime);
-      return margelo::nitro::shoebox::RollAsset(
+      return margelo::nitro::pearstarter::RollAsset(
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "id"))),
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "name"))),
         JSIConverter<double>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "byteLength"))),
@@ -70,7 +70,7 @@ namespace margelo::nitro {
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "path")))
       );
     }
-    static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::shoebox::RollAsset& arg) {
+    static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::pearstarter::RollAsset& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "id"), JSIConverter<std::string>::toJSI(runtime, arg.id));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "name"), JSIConverter<std::string>::toJSI(runtime, arg.name));

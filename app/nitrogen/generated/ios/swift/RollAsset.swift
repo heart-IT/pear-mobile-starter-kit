@@ -10,10 +10,10 @@ import NitroModules
 /**
  * Represents an instance of `RollAsset`, backed by a C++ struct.
  */
-public typealias RollAsset = margelo.nitro.shoebox.RollAsset
+public typealias RollAsset = margelo.nitro.pearstarter.RollAsset
 
 public extension RollAsset {
-  private typealias bridge = margelo.nitro.shoebox.bridge.swift
+  private typealias bridge = margelo.nitro.pearstarter.bridge.swift
 
   /**
    * Create a new instance of `RollAsset`.

@@ -77,9 +77,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.shoebox"
+    namespace "com.pearstarter"
     defaultConfig {
-        applicationId "com.shoebox"
+        applicationId "com.pearstarter"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -87,7 +87,7 @@ android {
     }
     externalNativeBuild {
         cmake {
-            // Builds the Shoebox target that the Nitrogen autolinking
+            // Builds the PearStarter target that the Nitrogen autolinking
             // hook attaches its generated JNI/Nitro sources to.
             path "../CMakeLists.txt"
         }
@@ -137,7 +137,7 @@ android {
 }
 
 // Nitrogen-generated sources (Kotlin specs + OnLoad)
-apply from: "../../nitrogen/generated/android/Shoebox+autolinking.gradle"
+apply from: "../../nitrogen/generated/android/PearStarter+autolinking.gradle"
 // nitrogen's generated srcDir assumes the nitro library layout (android/ at the
 // package root); the app module sits one level deeper, so add the real path.
 android.sourceSets.main.java.srcDirs += ["${projectDir}/../../nitrogen/generated/android/kotlin"]

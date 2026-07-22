@@ -1,5 +1,5 @@
 import { NitroModules } from 'react-native-nitro-modules'
-import type { ShoeboxPaths } from './specs/shoebox-paths.nitro'
+import type { PearStarterPaths } from './specs/pearstarter-paths.nitro'
 
 /**
  * Storage base for the vault. Falls back to null (worker uses its tmpdir) if
@@ -8,7 +8,7 @@ import type { ShoeboxPaths } from './specs/shoebox-paths.nitro'
  */
 export function documentsPath(): string | null {
   try {
-    const paths = NitroModules.createHybridObject<ShoeboxPaths>('ShoeboxPaths')
+    const paths = NitroModules.createHybridObject<PearStarterPaths>('PearStarterPaths')
     return paths.getDocumentsPath()
   } catch {
     return null

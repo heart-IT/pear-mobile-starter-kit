@@ -1,5 +1,5 @@
 {
-  "name": "shoebox-worker",
+  "name": "pearstarter-worker",
   "version": "0.1.0",
   "private": true,
   "description": "Minimal Bare worker for the starter — boots inside react-native-bare-kit and answers a bare-rpc PING. Add Holepunch deps (corestore, hyperswarm, …) here; react-native-bare-kit links their native addons from this tree.",

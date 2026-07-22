@@ -21,7 +21,7 @@ export default function App() {
 
   useEffect(() => {
     // Nitro seam — verify by the VALUE it returns, never by "the app didn't crash".
-    setNativePath(documentsPath() ?? '✗ ShoeboxPaths native module not registered')
+    setNativePath(documentsPath() ?? '✗ PearStarterPaths native module not registered')
 
     // Bare seam — boot the worklet, ping it, read the reply.
     const worklet = new Worklet()
@@ -42,7 +42,7 @@ export default function App() {
         <Text style={styles.title}>Pear Mobile Starter</Text>
         <Text style={styles.sub}>React Native · Bare · Nitro — booting on device</Text>
         <View style={styles.card}>
-          <Text style={styles.label}>Nitro native module (ShoeboxPaths)</Text>
+          <Text style={styles.label}>Nitro native module (PearStarterPaths)</Text>
           <Text style={styles.value}>{nativePath}</Text>
         </View>
         <View style={styles.card}>

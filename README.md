@@ -11,9 +11,11 @@ Extracted from the companion repo of the
 so the first chapter can teach P2P instead of build config. Everything below the
 JS layer is the device-verified scaffold from that series.
 
-> **Status:** the native wiring is the device-verified Shoebox scaffold; the JS
-> layer is a blank home screen. It's built to boot as-is — do one `npm run android`
-> to confirm on your setup before you lean on it. iOS pods/build are unverified here.
+> **Status:** the Android native wiring is the device-verified scaffold; the JS layer is a
+> blank home screen. It's built to boot as-is — do one `npm run android` to confirm on your
+> setup before you lean on it. **iOS is build-unverified**: the podspec now compiles all four
+> example modules (a prior version shipped only `Paths` and could not link), but no iOS build
+> has been run here — confirm on a Mac before you lean on it.
 
 ---
 
@@ -137,13 +139,54 @@ Keep only the Nitro modules you need:
 
 ## Renaming for your app
 
-This starter keeps the `Shoebox` name and the `com.margelo.nitro.shoebox` Nitro
-namespace so the verified wiring stays intact out of the box. To rebrand:
-`app/app.json` (`name`/`displayName`, must match `index.js` registration),
-`android` `applicationId` + package dirs + `MainApplication`/`MainActivity` package,
-`ios/Shoebox/` folder + bundle id + `ShoeboxNitro.podspec`, and the
-`com.margelo.nitro.shoebox` namespace across `nitro.json`, the specs, and the native
-impls — then re-run `npx nitrogen`. Do it once, verify on device.
+The starter ships a neutral **display name** ("Pear Mobile Starter") but keeps its
+internal identifiers — the RN component name `Shoebox`, the Android id `com.shoebox`,
+and the Nitro namespace `com.margelo.nitro.shoebox` — so the device-verified wiring stays
+intact out of the box. Renaming splits into two **independent** axes. You almost always
+want the first; the second is optional.
+
+> The component name is hardcoded in native, not just `app.json` — change `app.json`
+> alone and you get a runtime `Application <name> has not been registered` red screen.
+> Every site in a row must move together.
+
+### Axis 1 — the app shell (do this for your app)
+
+| What | Every file that must change |
+|---|---|
+| **Component name** (`Shoebox`) | `app/app.json` `name` · `app/android/app/src/main/java/com/shoebox/MainActivity.kt` `getMainComponentName()` · `app/ios/Shoebox/AppDelegate.swift` `withModuleName:` · `app/android/settings.gradle` `rootProject.name` |
+| **Display name** (user-visible label) | `app/app.json` `displayName` · `app/android/app/src/main/res/values/strings.xml` `app_name` · `app/ios/Shoebox/Info.plist` `CFBundleDisplayName` · `app/ios/Shoebox/LaunchScreen.storyboard` |
+| **Android app id** (`com.shoebox`) | `app/android/app/build.gradle` `applicationId` **and** `namespace` · the package dirs `.../java/com/shoebox/` · the `package com.shoebox` line in `MainApplication.kt` and `MainActivity.kt` |
+| **iOS bundle id** | `app/ios/Shoebox.xcodeproj/project.pbxproj` `PRODUCT_BUNDLE_IDENTIFIER` (currently the `com.example.pearstarter` placeholder, in **both** Debug and Release) |
+| **iOS project name** | the `ios/Shoebox/` folder, `Shoebox.xcodeproj`, `Shoebox.xcworkspace`, the scheme, and the `Podfile` target — **rename the target from inside Xcode** so it rewrites `project.pbxproj` safely, then `pod install` |
+
+`app/index.js` needs no edit — it reads the name from `app.json`.
+
+`./rename.sh <NewName> <com.your.appid>` does the mechanical string replacements and the
+Android package-dir move; the iOS project rename stays a manual Xcode step (hand-editing
+`project.pbxproj` is fragile).
+
+### Axis 2 — the Nitro module identity (optional)
+
+The `com.margelo.nitro.shoebox` namespace and the `Shoebox*` module names thread through the
+~50 **generated** files under `app/nitrogen/generated/`. Leave them and everything works —
+`com.margelo.nitro` is Nitro's own convention. If you do rename:
+
+1. Change `app/nitro.json` `cxxNamespace` / `androidNamespace` (and the `autolinking` keys if
+   you rename the modules), rename the spec files + native impl classes, and update the
+   `com.margelo.nitro.shoebox` import in `MainApplication.kt` and the `margelo::nitro::shoebox`
+   call in `android/nitro/cpp-adapter.cpp`.
+2. Re-run **`npx nitrogen`** from `app/` to regenerate everything under `nitrogen/generated/`.
+3. If you also change `iosModuleName` / `androidCxxLibName` in `nitro.json`, the hand-written
+   references to the generated *library* name move in lockstep: `app/android/CMakeLists.txt`
+   (`add_library(Shoebox …)` + the `Shoebox+autolinking.cmake` include), `app/android/app/build.gradle`
+   (`apply from: … Shoebox+autolinking.gradle`), and `app/ShoeboxNitro.podspec` (`load … Shoebox+autolinking.rb`).
+
+**Do the whole rename once, then verify on a device.** `npx nitrogen` + a build is the only
+thing that confirms the two axes still line up.
+
+The worker package name (`shoebox-worker` in `worker/package.json`, the `file:../worker` key
+in `app/package.json`, and the `bundle:worker` path) is internal — leave it, or rename all
+three together and re-run `npm install` + `npm run bundle:worker`.
 
 ## License
 

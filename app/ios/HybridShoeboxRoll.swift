@@ -2,7 +2,7 @@ import Foundation
 import Photos
 
 // NOTE: written to spec, not yet verified on an iOS build (Android is the
-// chapter's verified platform; see VERSIONS.md). PHAsset exposes no stable
+// verified platform for this starter). PHAsset exposes no stable
 // filesystem path — `path` stays empty here and iOS byte access arrives with
 // the import movements via PHAssetResource.
 class HybridShoeboxRoll: HybridShoeboxRollSpec {

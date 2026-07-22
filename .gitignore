@@ -20,3 +20,5 @@ android/local.properties
 *.keystore
 !debug.keystore
 # nitro codegen is committed on purpose (regenerate with `npx nitrogen`)
+# ML models (drop your own; do not commit multi-MB weights)
+*.tflite

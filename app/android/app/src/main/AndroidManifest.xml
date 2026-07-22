@@ -1,14 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <!-- Android 14+ (API 34): "Select photos" grants partial access via this
-         permission instead of READ_MEDIA_IMAGES; without it, a partial grant reads
-         as a denial and locks the user out of import. -->
-    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
-    <!-- pre-13 devices (minSdk 29-32) use the legacy storage permission -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+    <!-- Photo-library permissions were removed from the neutral starter shell. If you
+         enable the ShoeboxRoll example module, add back: READ_MEDIA_IMAGES,
+         READ_MEDIA_VISUAL_USER_SELECTED (Android 14+ partial grant), and
+         READ_EXTERNAL_STORAGE (maxSdkVersion=32) — plus requestLegacyExternalStorage
+         on <application> for pre-13 devices. -->
+
 
     <application
       android:name=".MainApplication"
@@ -18,7 +16,6 @@
       android:allowBackup="false"
       android:theme="@style/AppTheme"
       android:networkSecurityConfig="@xml/network_security_config"
-      android:requestLegacyExternalStorage="true"
       android:supportsRtl="true">
       <activity
         android:name=".MainActivity"
